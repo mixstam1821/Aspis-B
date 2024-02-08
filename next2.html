@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>greek freedom fighters</title>
+    <!-- including ECharts file -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.1/dist/echarts.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/echarts-liquidfill@3/dist/echarts-liquidfill.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@3.8.0/map/js/world.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+
+</head>
+<style>
+        .nextPageButton1 {
+            background-color: #a1033d;
+            color: #fff200;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .nextPageButton2 {
+            background-color: #a1033d;
+            color: #fff200;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+</style>
+<body>
+
+    <!-- preparing a DOM with width and height for ECharts -->
+    <div id="main" style="width:1200px; height:940px;"></div>
+        <div id="te" style="width: 661px; background-color: #ff8888;margin-top: 14px; margin-left: 10px;" ><i>Often updates! Under the in-progress project Aspis B: Interactive Plots for Greek History and Folklore</i></div>
+
+    <button class="nextPageButton1" id="nextPageButton1"  style="margin-top: 18px">Next</button>
+    <button class="nextPageButton2" id="nextPageButton2" style="margin-top: 18px">Previous</button>
+
+    <script type="text/javascript">
+        // Function to generate random data for each season
+
+        // Initialize ECharts
+        var myChart = echarts.init(document.getElementById('main'));
+
+
+
+
+
+var datam = [
+  ["Theodoros Kolokotronis", "Yannis Makriyannis", "Athanasios Diakos","Papaflessas","Georgios Karaiskakis","Markos Botsaris", "Katsantonis", "Nikitaras", "Konstantinos Kanaris", "Odysseas Androutsos"],
+  [1770,1797,1788,1788,1782,1790,1775,1781,1790,1790],
+  [1843,1864,1821,1825,1827,1823,1808,1849,1877,1825],
+  ['-','-',1821-1788,1825-1788,1827-1782,1823-1790,1808-1775,'-','-',1825-1790],
+  [1843-1770,1864-1797,'-','-','-','-','-',1849-1781,1877-1790,'-']
+];
+
+
+
+// Create an array of indices
+var indices = [...Array(datam[0].length).keys()];
+
+// Sort the indices based on the birth years
+indices.sort(function(a, b) {
+    return datam[1][b] - datam[1][a];
+});
+
+// Sort most important Byzantine emperors list based on birth years
+datam = datam.map(function(arr) {
+    return indices.map(function(i) {
+        return arr[i];
+    });
+});
+
+
+
+
+        option = {
+  title: {
+    text: '10 important freedom fighters of the Greek revolution 1821'
+  },
+  tooltip: {        textStyle: {
+            fontSize: 24 // Adjust the font size as needed
+        }
+,
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    },
+    formatter: function (params) {
+      let tar;
+      if (params[1] && params[1].value !== '-') {
+        tar = params[1];
+      } else {
+        tar = params[2];
+      }
+      return tar && tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
+    }
+  },
+  legend: {left: 'right',
+    data: ['killed', "not killed"]
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  yAxis: {
+    type: 'category',
+    data: datam[0], axisLabel:{fontSize: 24,color:'black'}
+  },
+  xAxis: {min:1750,max:1900,
+    type: 'value', interval :20, axisLabel:{fontSize: 24,color:'black'}, axisLine:{show:true,lineStyle:{color:'black'}}
+  },
+  series: [
+    {
+      name: 'Placeholder',
+      type: 'bar',
+      stack: 'Total',
+      silent: true,
+      itemStyle: {
+        borderColor: 'transparent',
+        color: 'transparent',
+        
+        borderRadius:20
+      },
+      emphasis: {
+        itemStyle: {
+          borderColor: 'transparent',
+          color: 'transparent'
+        }
+      },
+      data: datam[1],
+    },
+    {
+      name: "killed", color:'#FF3131',
+      type: 'bar',
+      stack: 'Total',
+      label: {
+        show: true,fontSize:20,
+        position: 'right'
+      },
+      data: datam[3],
+            itemStyle: {        borderRadius:20 },
+    },
+    {
+      name: "not killed", color:'#0096FF',
+      type: 'bar',
+      stack: 'Total',
+      label: {
+        show: true,fontSize:20,
+        position: 'right'
+      },
+      data: datam[4],itemStyle: {        borderRadius:20 },
+    }
+  ]
+};
+
+
+        myChart.setOption(option);
+
+
+
+
+
+            var nextPageButton1 = document.getElementById('nextPageButton1');
+
+        // Add an event listener to the button
+        nextPageButton1.addEventListener('click', function() {
+            // Redirect to the next page
+            window.location.href = '/next3.html'; // Replace 'nextpage.html' with the URL of the page containing the desired plot
+        });
+
+
+var nextPageButton2 = document.getElementById('nextPageButton2');
+
+        // Add an event listener to the button
+        nextPageButton2.addEventListener('click', function() {
+            // Redirect to the next page
+            window.location.href = '/next1.html'; // Replace 'nextpage.html' with the URL of the page containing the desired plot
+        });
+
+
+
+
+    </script>
+
+</body>
+
+</html>
+
